@@ -71,7 +71,110 @@ The results confirmed that docker was sucessfully installed and running.
 ---
 
 ### Step 3 – Docker Container Deployment
-(To be completed next)
+## 1. Overview
+
+This part of the project illustrates the automated deployment of a containerised web application using Docker on an AWS EC2 instance that was provisioned using Terraform and configured using Ansible.
+
+Here, a simple and straightforward HTML web application was built and assembled/packaged into a Docker image using a custom Dockerfile based on the lightweight Nginx Alpine image. The container was then deployed on the EC2 server and was made accessible and available through the public IP address.
+
+This clearly depicts the use of Infrastructure as Code (IaC), DevOps automation, and cloud-based container deployment.
+
+---
+
+## 2. Project Structure
+
+```
+aws-terraform-ansible-docker-project/
+│
+├── terraform/
+├── ansible/
+├── app/
+│ ├── Dockerfile
+│ └── index.html
+└── README.md
+```
+
+---
+
+## 3. Dockerfile Explanation
+
+The Dockerfile executes the following steps:
+
+1. It uses `nginx:alpine` as a lightweight base image
+2. Then Copies the HTML file into the Nginx web directory
+3. Then it Exposes port **80** for HTTP access
+
+Example Dockerfile:
+
+```
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html
+EXPOSE 80
+```
+
+---
+
+## 4. Build and Run the Container
+
+### Build Docker Image
+```
+docker build -t jeremiah-webapp .
+```
+
+### Run Docker Container
+```
+docker run -d -p 8080:80 --name webapp-test jeremiah-webapp
+```
+
+### Test Application
+When you open your browser:
+```
+http://<EC2-Public-IP>:8080
+```
+
+You will see the message:
+
+```
+Docker Deployment Successful
+```
+
+---
+
+## 5. Automated Deployment with Ansible
+
+The deployment process was automated using ansible playbook
+
+Run the playbook:
+
+```
+ansible-playbook -i inventory.ini deploy-webapp.yml
+```
+
+This playbook:
+- Pulls the Docker image
+- Starts the container
+- Guarantees/ensures the container is running
+
+---
+
+## 6. Security Considerations
+
+- EC2 Security Group permits only required ports (22, 80, 443, 8080)
+- Docker image uses minimal/simple `nginx:alpine`
+- Automation decreases/minimizes configuration errors
+
+---
+
+## 7. Outcome
+
+- My Docker container was successfully deployed
+- My Web application is accessible via EC2 public IP
+- Integrated Terraform + Ansible + Docker workflow completed
+
+This confirms successful automation of infrastructure provisioning, configuration management, and container deployment.
+
+---
+
 
 ---
 
