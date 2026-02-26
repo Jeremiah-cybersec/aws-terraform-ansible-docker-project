@@ -1,0 +1,14 @@
+---
+- name: Deploy Docker Web App
+  hosts: web
+  become: yes
+
+  tasks:
+    - name: Pull nginx image
+      docker_container:
+        name: webapp
+        image: nginx:alpine
+        state: started
+        ports:
+          - "80:80"
+
