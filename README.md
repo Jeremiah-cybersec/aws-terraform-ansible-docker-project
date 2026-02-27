@@ -85,13 +85,15 @@ This clearly depicts the use of Infrastructure as Code (IaC), DevOps automation,
 
 ```
 aws-terraform-ansible-docker-project/
-│
 ├── terraform/
+│ └── (Terraform files to provision the EC2 instance + security group)
 ├── ansible/
-├── app/
-│ ├── Dockerfile
-│ └── index.html
-└── README.md
+│ ├── deploy-webapp.yml
+│ ├── install-docker.yml
+│ └── inventory.ini
+└── app/
+├── Dockerfile
+└── index.html
 ```
 
 ---
@@ -114,28 +116,31 @@ EXPOSE 80
 
 ---
 
-## 4. Build and Run the Container
+## 4. Build and Run the Container(Manual method)
+### SSH into EC2
+```
+ssh -i ~/terraform-key-new.pem ubuntu@54.171.166.157
+```
+
+### Copy app to server 
+```
+scp -i ~/terraform-key-new.pem -r ./app ubuntu@54.171.166.157:~/
+```
 
 ### Build Docker Image
 ```
 docker build -t jeremiah-webapp .
 ```
 
-### Run Docker Container
+### Run Docker Container(HTTP on port 80)
 ```
-docker run -d -p 8080:80 --name webapp-test jeremiah-webapp
-```
-
-### Test Application
-When you open your browser:
-```
-http://<EC2-Public-IP>:8080
+docker run -d -p 80:80 --name webapp-test jeremiah-webapp
 ```
 
-You will see the message:
-
+### Verify container is running
 ```
-Docker Deployment Successful
+docker ps
+curl -I http://localhost
 ```
 
 ---
@@ -155,12 +160,18 @@ This playbook:
 - Starts the container
 - Guarantees/ensures the container is running
 
+### Copy app to server 
+```
+Open in your browser:
+http://54.171.166.157
+```
+
 ---
 
 ## 6. Security Considerations
 
-- EC2 Security Group permits only required ports (22, 80, 443, 8080)
-- Docker image uses minimal/simple `nginx:alpine`
+- EC2 Security Group permits only required ports (22, 80)
+- Docker image uses minimal/simple `nginx:alpine` to reduce attack surface
 - Automation decreases/minimizes configuration errors
 
 ---
