@@ -1,14 +1,38 @@
 ---
 - name: Deploy Docker Web App
   hosts: web
-  become: yes
+  become: true
 
   tasks:
-    - name: Pull nginx image
-      docker_container:
-        name: webapp
-        image: nginx:alpine
-        state: started
-        ports:
-          - "80:80"
+  - name: Ensure Docker is installed
+    apt:
+      name: docker.io
+      state: present
+      update_cache: yes
 
+  - name: Ensure Docker service is running
+    service:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: Create app directory on server
+    file:
+      path: /opt/webapp
+      state: directory
+
+  - name: Copy app folder to server
+    copy:
+      src: ../app/
+      dest: /opt/webapp/
+      mode: "0755"
+
+  - name: Build Docker image
+    command: docker build -t jeremiah-webapp:latest /opt/webapp
+
+  - name: Remove old container
+    command: docker rm -f webapp-test
+    ignore_errors: yes
+
+  - name: Run container
+    command: docker run -d --name webapp-test -p 80:80 jeremiah-webapp:latest
