@@ -20,10 +20,10 @@ The aim of this project is to automate server provisioning, configuration, and d
 ## Automation Flow
 
 ### Step 1 – Infrastructure Provisioning (Terraform)
-An AWS EC2 instance was automatically created using Terraform.
+I created an Ubuntu 22.04 EC2 instance automatically using Terraform.
 
 Files used:
-- main.tf - This is for creating the EC2 instance and security group.
+- main.tf - This is for creating the ubuntu 22.04 EC2 instance and security group.
 - variables.tf - This is for inputting variables that is used by terraform(e.g., instance type, key name).
 - providers.tf - This is the AWS provider configuration (region/provider settings).
 - output.tf - Outputs useful value after apply(e.g., 'instance ip').
@@ -50,8 +50,8 @@ Tasks automated:
 - I Enableed Docker to start on boot
 
 Files used:
-- inventory.ini - It contains the EC2 public IP and and SSH key for connection
-- install-docker.yml - This is the ansible playbook that will install and start the docker
+- inventory.ini - It contains the ubuntu 22.04 EC2 public IP and and SSH key for connection
+- install-docker.yml - This is the ansible playbook that i will use to install and start the docker
 
 Command used:
 ansible-playbook -i inventory.ini install-docker.yml
