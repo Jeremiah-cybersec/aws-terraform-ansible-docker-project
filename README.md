@@ -185,7 +185,12 @@ http://54.171.166.157
 This confirms successful automation of infrastructure provisioning, configuration management, and container deployment.
 
 ---
+### Step 4 – CI/CD PIPELINE
+a fully automated CI/CD pipeline that converts a code commit into a running web service on an AWS EC2 host. When I push the GitHub Repository, it triggers a GitHub Actions workflow, which coordinates infrastructure and configuration stages. Terraform implements init, plan, and apply against the AWS API using credentials I stored as GitHub Secrets. This ensures infrastructure state consistency and retrieving outputs such as the EC2 public IP. 
 
+The pipeline then activates Ansible via SSH to enforce idempotent server configuration—installing Docker Engine, enabling required services, and preparing runtime dependencies. Ansible deploys the application container using Docker, and it runs nginx:alpine image, which is a lightweight NGINX distribution optimized for least footprint and fast startup. The container exposes HTTP on port 80, with AWS Security Groups allowing inbound traffic. 
+
+NGINX gives static content straight from the container’s filesystem. This setup makes the deployments predictable and repeatable, supports Infrastructure-as-Code tracking, allows for automated rollbacks, and keeps clear workflow logs. 
 
 ---
 
