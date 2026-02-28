@@ -170,7 +170,7 @@ http://54.171.166.157
 
 ## 6. Security Considerations
 
-- EC2 Security Group permits only required ports (22, 80, 433)
+- EC2 Security Group permits only required ports (22, 80)
 - Docker image uses minimal/simple `nginx:alpine` to reduce attack surface
 - Automation decreases/minimizes configuration errors
 
