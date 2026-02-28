@@ -75,7 +75,7 @@ The results confirmed that docker was sucessfully installed and running.
 
 This part of the project illustrates the automated deployment of a containerised web application using Docker on an AWS EC2 instance that was provisioned using Terraform and configured using Ansible.
 
-Here, a simple and straightforward HTML web application was built and assembled/packaged into a Docker image using a custom Dockerfile based on the lightweight Nginx Alpine image. The container was then deployed on the EC2 server and was made accessible and available through the public IP address.
+Here, a simple and straightforward HTML web application  “Docker deployment sucessful” was built and assembled/packaged into a Docker image using a custom Dockerfile based on the lightweight Nginx Alpine image. The container was then deployed on the EC2 server and was made accessible and available through the public IP address.
 
 This clearly depicts the use of Infrastructure as Code (IaC), DevOps automation, and cloud-based container deployment.
 
@@ -170,7 +170,7 @@ http://54.171.166.157
 
 ## 6. Security Considerations
 
-- EC2 Security Group permits only required ports (22, 80)
+- EC2 Security Group permits only required ports (22, 80, 433)
 - Docker image uses minimal/simple `nginx:alpine` to reduce attack surface
 - Automation decreases/minimizes configuration errors
 
